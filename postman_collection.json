@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "REST Practice - /items",
+    "description": "서버: ./gradlew bootRun\n위에서부터 순서대로 실행 (Runner 가능). 모두 성공(2xx) 응답만 확인합니다. POST 응답의 id는 {{id}} 컬렉션 변수에 자동 저장됩니다.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "1. POST /items (201)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('201 Created', () => pm.response.to.have.status(201));",
+        "pm.collectionVariables.set('id', pm.response.json().id);"
+      ] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"keyboard\",\n  \"price\": 30000\n}" },
+        "url": { "raw": "{{baseUrl}}/items", "host": ["{{baseUrl}}"], "path": ["items"] }
+      }
+    },
+    {
+      "name": "2. GET /items (200)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));"
+      ] } }],
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/items", "host": ["{{baseUrl}}"], "path": ["items"] }
+      }
+    },
+    {
+      "name": "3. GET /items/{{id}} (200)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));"
+      ] } }],
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/items/{{id}}", "host": ["{{baseUrl}}"], "path": ["items", "{{id}}"] }
+      }
+    },
+    {
+      "name": "4. PUT /items/{{id}} (200)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));"
+      ] } }],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"mechanical keyboard\",\n  \"price\": 89000\n}" },
+        "url": { "raw": "{{baseUrl}}/items/{{id}}", "host": ["{{baseUrl}}"], "path": ["items", "{{id}}"] }
+      }
+    },
+    {
+      "name": "5. PATCH /items/{{id}} (200)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));"
+      ] } }],
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"price\": 79000\n}" },
+        "url": { "raw": "{{baseUrl}}/items/{{id}}", "host": ["{{baseUrl}}"], "path": ["items", "{{id}}"] }
+      }
+    },
+    {
+      "name": "6. DELETE /items/{{id}} (204)",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('204 No Content', () => pm.response.to.have.status(204));"
+      ] } }],
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/items/{{id}}", "host": ["{{baseUrl}}"], "path": ["items", "{{id}}"] }
+      }
+    }
+  ]
+}

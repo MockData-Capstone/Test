@@ -1,0 +1,49 @@
+### RESTful 연습 — IntelliJ HTTP Client / VS Code REST Client 로 실행
+### 위에서부터 순서대로 실행해 보세요. (서버: ./gradlew bootRun)
+
+@host = http://localhost:8080
+
+### 1. POST — 생성 (201 Created + Location 헤더)
+POST {{host}}/items
+Content-Type: application/json
+
+{ "name": "keyboard", "price": 30000 }
+
+### 2. POST — 하나 더
+POST {{host}}/items
+Content-Type: application/json
+
+{ "name": "mouse", "price": 15000 }
+
+### 3. GET — 목록 (200)
+GET {{host}}/items
+
+### 4. GET — 단건 (200)
+GET {{host}}/items/1
+
+### 5. GET — 없는 id (404)
+GET {{host}}/items/999
+
+### 6. PUT — 전체 교체 (모든 필드 필수)
+PUT {{host}}/items/1
+Content-Type: application/json
+
+{ "name": "mechanical keyboard", "price": 89000 }
+
+### 7. PUT — 필드 누락 시 (400)
+PUT {{host}}/items/1
+Content-Type: application/json
+
+{ "name": "" , "price": -1 }
+
+### 8. PATCH — 일부만 수정 (price만 바뀜)
+PATCH {{host}}/items/1
+Content-Type: application/json
+
+{ "price": 79000 }
+
+### 9. DELETE — 삭제 (204 No Content)
+DELETE {{host}}/items/2
+
+### 10. DELETE — 이미 삭제됨 (404)
+DELETE {{host}}/items/2
